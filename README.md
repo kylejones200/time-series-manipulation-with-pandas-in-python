@@ -1,13 +1,47 @@
-# Time Series manipulation with Pandas in Python
+# Time Series Manipulation with Pandas in Python
 
-**Published:** 2025-01-08
-**Medium:** [https://medium.com/@kyle-t-jones/time-series-manipulation-with-pandas-in-python-ac8ffc64b670](https://medium.com/@kyle-t-jones/time-series-manipulation-with-pandas-in-python-ac8ffc64b670)
+This project demonstrates time series manipulation techniques using Pandas.
 
-## About
+## Article
 
-Place the code for this article in this repository.
-The original article export is saved as `article.md`.
+Medium article: [Time Series Manipulation with Pandas in Python](https://medium.com/@kylejones_47003/time-series-manipulation-with-pandas-in-python-ac8ffc64b670)
 
-## Files
+## Project Structure
 
-Add your `.ipynb`, `.py`, `.yaml`, `.js`, `.ts`, or other project files here.
+```
+.
+├── README.md           # This file
+├── main.py            # Main entry point
+├── config.yaml        # Configuration file
+├── requirements.txt   # Python dependencies
+├── src/               # Core functions
+│   ├── core.py        # Time series manipulation functions
+│   └── plotting.py    # Tufte-style plotting utilities
+├── tests/             # Unit tests
+├── data/              # Data files
+└── images/            # Generated plots and figures
+```
+
+## Configuration
+
+Edit `config.yaml` to customize:
+- Data source or synthetic generation
+- Date and value column names
+- Rolling window size
+- Resampling frequency
+- Output settings
+
+## Features
+
+Pandas time series operations:
+- Rolling statistics (mean, std)
+- Shifting and lagging
+- Percentage change
+- Resampling to different frequencies
+- Time-based indexing
+
+## Caveats
+
+- By default, generates synthetic time series data.
+- Requires datetime index for resampling.
+- Window size affects rolling statistics.
