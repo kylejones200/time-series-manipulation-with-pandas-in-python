@@ -28,7 +28,7 @@ def resample_time_series(df: pd.Series, freq: str = 'W') -> pd.Series:
     return df.resample(freq).mean()
 
 def plot_time_series_manipulation(df: pd.DataFrame, value_col: str, title: str, output_path: Path):
- """Plot time series manipulations """
+    """Plot time series manipulations """
     fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
     
     axes[0].plot(df.index, df[value_col], label="Original", color="#4A90A4", linewidth=1.2)
