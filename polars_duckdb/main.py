@@ -10,7 +10,6 @@ import polars as pl
 from datetime import date, timedelta
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent))
 from core import manipulate_time_series, resample_time_series, plot_time_series_manipulation
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
