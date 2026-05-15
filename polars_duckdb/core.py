@@ -1,18 +1,29 @@
 """Time series manipulation using Polars and DuckDB."""
 
-import duckdb
-import polars as pl
-import matplotlib.pyplot as plt
 import logging
 from pathlib import Path
 
-logging.basicConfig(level=logging.INFO, format='%(message)s')
+import duckdb
+import matplotlib.pyplot as plt
+import polars as pl
+
+logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 # Mapping from pandas resample freq codes to Polars group_by_dynamic every-strings.
-_FREQ_MAP = {"D": "1d", "W": "1w", "M": "1mo", "Q": "1q", "Y": "1y", "H": "1h", "T": "1m"}
+_FREQ_MAP = {
+    "D": "1d",
+    "W": "1w",
+    "M": "1mo",
+    "Q": "1q",
+    "Y": "1y",
+    "H": "1h",
+    "T": "1m",
+}
 
 
-def manipulate_time_series(df: pl.DataFrame, date_col: str, value_col: str) -> pl.DataFrame:
+def manipulate_time_series(
+    df: pl.DataFrame, date_col: str, value_col: str
+) -> pl.DataFrame:
     # DuckDB window functions replace pandas .rolling(), .shift(), .pct_change().
     # ROWS BETWEEN 6 PRECEDING AND CURRENT ROW = 7-row trailing window (matches rolling(7)).
     result = duckdb.sql(f"""
@@ -40,8 +51,8 @@ def resample_time_series(
     every = _FREQ_MAP.get(freq.upper(), freq)
     return (
         df.sort(date_col)
-          .group_by_dynamic(date_col, every=every)
-          .agg(pl.col(value_col).mean())
+        .group_by_dynamic(date_col, every=every)
+        .agg(pl.col(value_col).mean())
     )
 
 
@@ -57,13 +68,31 @@ def plot_time_series_manipulation(
 
         dates = df[date_col].to_list()
 
-        axes[0].plot(dates, df[value_col].to_list(), label="Original", color="#4A90A4", linewidth=1.2)
-        axes[0].plot(dates, df["rolling_mean"].to_list(), label="Rolling Mean (7d)", color="#D4A574", linewidth=1.2)
+        axes[0].plot(
+            dates,
+            df[value_col].to_list(),
+            label="Original",
+            color="#4A90A4",
+            linewidth=1.2,
+        )
+        axes[0].plot(
+            dates,
+            df["rolling_mean"].to_list(),
+            label="Rolling Mean (7d)",
+            color="#D4A574",
+            linewidth=1.2,
+        )
         axes[0].set_ylabel("Value")
         axes[0].set_title(title)
         axes[0].legend(loc="best")
 
-        axes[1].plot(dates, df["pct_change"].to_list(), label="Percent Change", color="#8B6F9E", linewidth=1.2)
+        axes[1].plot(
+            dates,
+            df["pct_change"].to_list(),
+            label="Percent Change",
+            color="#8B6F9E",
+            linewidth=1.2,
+        )
         axes[1].set_xlabel("Date")
         axes[1].set_ylabel("Percent Change")
         axes[1].legend(loc="best")

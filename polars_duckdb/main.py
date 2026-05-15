@@ -2,16 +2,22 @@
 """Time series manipulation — Polars + DuckDB rewrite of ../main.py"""
 
 import argparse
-import yaml
 import logging
-import numpy as np
-import polars as pl
 from datetime import date, timedelta
 from pathlib import Path
 
-from core import manipulate_time_series, resample_time_series, plot_time_series_manipulation
+import numpy as np
+import polars as pl
+import yaml
+from core import (
+    manipulate_time_series,
+    plot_time_series_manipulation,
+    resample_time_series,
+)
 
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
 def load_config(config_path: Path = None) -> dict:
@@ -22,7 +28,9 @@ def load_config(config_path: Path = None) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Time series manipulation — Polars + DuckDB")
+    parser = argparse.ArgumentParser(
+        description="Time series manipulation — Polars + DuckDB"
+    )
     parser.add_argument("--config", type=Path, default=None)
     parser.add_argument("--data-path", type=Path, default=None)
     parser.add_argument("--output-dir", type=Path, default=None)
@@ -31,7 +39,11 @@ def main():
     config = load_config(args.config)
     date_col = config["data"]["date_column"]
     value_col = config["data"]["value_column"]
-    output_dir = Path(args.output_dir) if args.output_dir else Path(config["output"]["figures_dir"])
+    output_dir = (
+        Path(args.output_dir)
+        if args.output_dir
+        else Path(config["output"]["figures_dir"])
+    )
     output_dir.mkdir(exist_ok=True)
 
     if args.data_path and args.data_path.exists():
@@ -52,13 +64,19 @@ def main():
     logging.info(f"Std:  {df_result[value_col].std():.2f}")
 
     resampled = resample_time_series(
-        df_result, date_col, value_col,
+        df_result,
+        date_col,
+        value_col,
         freq=config["manipulation"]["resample_freq"],
     )
-    logging.info(f"Resampled length ({config['manipulation']['resample_freq']}): {len(resampled)}")
+    logging.info(
+        f"Resampled length ({config['manipulation']['resample_freq']}): {len(resampled)}"
+    )
 
     plot_time_series_manipulation(
-        df_result, date_col, value_col,
+        df_result,
+        date_col,
+        value_col,
         "Time Series Manipulation",
         output_dir / "manipulation.png",
     )
