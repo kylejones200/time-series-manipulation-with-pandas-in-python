@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Time series manipulation — Polars + DuckDB rewrite of ../main.py"""
 
-import sys
 import argparse
 import yaml
 import logging

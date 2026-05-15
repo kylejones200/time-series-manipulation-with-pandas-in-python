@@ -18,7 +18,7 @@ def load_config(config_path: Path = None) -> dict:
     if config_path is None:
         config_path = Path(__file__).parent / 'config.yaml'
     
-    with open(config_path, 'r') as f:
+    with open(config_path) as f:
         return yaml.safe_load(f)
 
 def main():
@@ -48,7 +48,7 @@ def main():
         df_manipulated = manipulate_time_series(df, config['data']['date_column'], 
                                            config['data']['value_column'])
     
-    logging.info(f"\nTime Series Statistics:")
+    logging.info("\nTime Series Statistics:")
     logging.info(f"Mean: {df_manipulated[config['data']['value_column']].mean():.2f}")
     logging.info(f"Std: {df_manipulated[config['data']['value_column']].std():.2f}")
     
