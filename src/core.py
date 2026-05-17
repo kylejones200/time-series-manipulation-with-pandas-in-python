@@ -35,33 +35,35 @@ def plot_time_series_manipulation(
     df: pd.DataFrame, value_col: str, title: str, output_path: Path, plot: bool = False
 ):
     """Plot time series manipulations"""
-    if plot:
-        fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
+    if not plot:
+        return
 
-        axes[0].plot(
-            df.index, df[value_col], label="Original", color="#4A90A4", linewidth=1.2
-        )
-        axes[0].plot(
-            df.index,
-            df["rolling_mean"],
-            label="Rolling Mean",
-            color="#D4A574",
-            linewidth=1.2,
-        )
-        axes[0].set_ylabel("Value")
-        axes[0].legend(loc="best")
+    fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
 
-        axes[1].plot(
-            df.index,
-            df["pct_change"],
-            label="Percent Change",
-            color="#8B6F9E",
-            linewidth=1.2,
-        )
-        axes[1].set_xlabel("Date")
-        axes[1].set_ylabel("Percent Change")
-        axes[1].legend(loc="best")
+    axes[0].plot(
+        df.index, df[value_col], label="Original", color="#4A90A4", linewidth=1.2
+    )
+    axes[0].plot(
+        df.index,
+        df["rolling_mean"],
+        label="Rolling Mean",
+        color="#D4A574",
+        linewidth=1.2,
+    )
+    axes[0].set_ylabel("Value")
+    axes[0].legend(loc="best")
 
-        plt.tight_layout()
-        plt.savefig(output_path, dpi=100, bbox_inches="tight", facecolor="white")
-        plt.close()
+    axes[1].plot(
+        df.index,
+        df["pct_change"],
+        label="Percent Change",
+        color="#8B6F9E",
+        linewidth=1.2,
+    )
+    axes[1].set_xlabel("Date")
+    axes[1].set_ylabel("Percent Change")
+    axes[1].legend(loc="best")
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=100, bbox_inches="tight", facecolor="white")
+    plt.close()
