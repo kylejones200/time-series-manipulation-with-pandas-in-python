@@ -2,6 +2,14 @@
 
 This project demonstrates time series manipulation techniques using Pandas.
 
+## Business context
+
+Pandas has built in tools we can use to analyze time series data such as shifting, windowing, resampling, and imputing missing values. This...
+
+Pandas has built in tools we can use to analyze time series data such as shifting, windowing, resampling, and imputing missing values. This data engineering work not the fun part of time series analysis, but it is important.
+
+<figcaption>Photo by <a class="markup--anchor markup--figure-anchor" rel="photo-creator noopener" target="_blank">Bianca Ackermann</a> on <a class="markup--anchor markup--figure-anchor"
+
 ## Article
 
 Medium article: [Time Series Manipulation with Pandas in Python](https://medium.com/@kylejones_47003/time-series-manipulation-with-pandas-in-python-ac8ffc64b670)
