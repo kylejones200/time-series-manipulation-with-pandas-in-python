@@ -20,7 +20,7 @@ logging.basicConfig(
 )
 
 
-def load_config(config_path: Path = None) -> dict:
+def load_config(config_path: Path | None = None) -> dict:
     if config_path is None:
         config_path = Path(__file__).parent.parent / "config.yaml"
     with open(config_path) as f:
@@ -35,7 +35,6 @@ def main():
     parser.add_argument("--data-path", type=Path, default=None)
     parser.add_argument("--output-dir", type=Path, default=None)
     args = parser.parse_args()
-
     config = load_config(args.config)
     date_col = config["data"]["date_column"]
     value_col = config["data"]["value_column"]
@@ -45,7 +44,6 @@ def main():
         else Path(config["output"]["figures_dir"])
     )
     output_dir.mkdir(exist_ok=True)
-
     if args.data_path and args.data_path.exists():
         df = pl.read_csv(args.data_path, try_parse_dates=True)
     elif config["data"]["generate_synthetic"]:
@@ -59,10 +57,8 @@ def main():
         raise ValueError("No data source specified")
 
     df_result = manipulate_time_series(df, date_col, value_col)
-
     logging.info(f"Mean: {df_result[value_col].mean():.2f}")
     logging.info(f"Std:  {df_result[value_col].std():.2f}")
-
     resampled = resample_time_series(
         df_result,
         date_col,
@@ -72,7 +68,6 @@ def main():
     logging.info(
         f"Resampled length ({config['manipulation']['resample_freq']}): {len(resampled)}"
     )
-
     plot_time_series_manipulation(
         df_result,
         date_col,
@@ -80,7 +75,6 @@ def main():
         "Time Series Manipulation",
         output_dir / "manipulation.png",
     )
-
     logging.info(f"Analysis complete. Figures saved to {output_dir}")
 
 

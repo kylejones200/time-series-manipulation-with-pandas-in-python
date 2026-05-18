@@ -67,9 +67,7 @@ def plot_time_series_manipulation(
         return
 
     fig, axes = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
-
     dates = df[date_col].to_list()
-
     axes[0].plot(
         dates,
         df[value_col].to_list(),
@@ -87,7 +85,6 @@ def plot_time_series_manipulation(
     axes[0].set_ylabel("Value")
     axes[0].set_title(title)
     axes[0].legend(loc="best")
-
     axes[1].plot(
         dates,
         df["pct_change"].to_list(),
@@ -98,7 +95,6 @@ def plot_time_series_manipulation(
     axes[1].set_xlabel("Date")
     axes[1].set_ylabel("Percent Change")
     axes[1].legend(loc="best")
-
     plt.tight_layout()
     plt.savefig(output_path, dpi=100, bbox_inches="tight", facecolor="white")
     plt.close()
